@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go to the Moon</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #status {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Go to the Moon!</h1>
+        <p id="status">Press SPACE to launch!</p>
+    </div>
+    <script>
+        let started = false;
+        let timer;
+        
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space') {
+                if (!started) {
+                    started = true;
+                    document.getElementById('status').textContent = "Launching...";
+                    timer = setTimeout(triggerScreamer, 2000);
+                }
+            }
+        });
+        
+        function triggerScreamer() {
+            document.body.innerHTML = "";
+            document.body.style.backgroundColor = "black";
+            let img = document.createElement("img");
+            img.src = "https://assets.onecompiler.app/437rezxye/439z435tw/45f6fb67ec89269deb92b954191cfa89_w200.gif";
+            img.style.position = "absolute";
+            img.style.width = "100%";
+            img.style.height = "100%";
+            document.body.appendChild(img);
+            
+            openScreamerTabs();
+            
+            let scream = new Audio("https://www.myinstants.com/instant/scream/embed");
+            scream.loop = true;
+            scream.play();
+            
+            document.documentElement.requestFullscreen();
+        }
+        
+        function openScreamerTabs() {
+            let tabs = [];
+            for (let i = 0; i < 5; i++) {
+                let win = window.open("", "AAA", "width=200,height=200,left=100,top=100");
+                if (win) {
+                    tabs.push(win);
+                    let screamAudio = win.document.createElement("audio");
+                    screamAudio.src = "https://www.myinstants.com/instant/scream/embed";
+                    screamAudio.loop = true;
+                    screamAudio.autoplay = true;
+                    win.document.body.appendChild(screamAudio);
+                    
+                    let img = win.document.createElement("img");
+                    img.src = "https://assets.onecompiler.app/437rezxye/439z435tw/45f6fb67ec89269deb92b954191cfa89_w200.gif";
+                    img.style.width = "100%";
+                    img.style.height = "100%";
+                    win.document.body.appendChild(img);
+                    
+                    let moveInterval = setInterval(() => {
+                        let left = Math.random() * (window.screen.width - 200);
+                        let top = Math.random() * (window.screen.height - 200);
+                        win.moveTo(left, top);
+                    }, 500);
+                }
+            }
+        }
+    </script>
+</body>
+</html> 
